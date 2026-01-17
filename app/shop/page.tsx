@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-export default function ShopPage() {
+function ShopContent() {
     const searchParams = useSearchParams();
     const { filters, viewMode, setViewMode, setSortBy, setSearchQuery } = useProductStore();
 
@@ -164,5 +164,13 @@ export default function ShopPage() {
                 </main>
             </div>
         </div>
+    );
+}
+
+export default function ShopPage() {
+    return (
+        <React.Suspense fallback={<div className="container mx-auto px-4 py-8">Loading products...</div>}>
+            <ShopContent />
+        </React.Suspense>
     );
 }
