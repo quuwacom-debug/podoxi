@@ -11,7 +11,6 @@ import {
     Smartphone,
     Wallet,
     Lock,
-    ChevronRight,
     CheckCircle2,
     ArrowLeft
 } from 'lucide-react';
@@ -48,6 +47,7 @@ export default function CheckoutPage() {
     const paymentMethod = watch('paymentMethod');
 
     const onSubmit = async (data: CheckoutFormValues) => {
+        console.log('Order data:', data);
         setIsProcessing(true);
         // Simulate payment processing
         await new Promise(resolve => setTimeout(resolve, 2000));

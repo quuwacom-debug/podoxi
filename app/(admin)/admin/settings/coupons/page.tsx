@@ -1,11 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Ticket, Plus, Copy, Trash } from "lucide-react"
+import { ArrowLeft, Ticket, Plus, Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+
 import {
     Table,
     TableBody,

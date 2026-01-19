@@ -1,18 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, GripVertical, Plus, Upload, Eye, EyeOff } from "lucide-react"
+import { ArrowLeft, GripVertical, Plus, Upload } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 const banners = [
     { id: 1, title: "Summer Sale 2024", image: "banner-summer.jpg", status: "Active", clicks: 1250, schedule: "Always" },

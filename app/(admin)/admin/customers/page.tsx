@@ -3,11 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import {
-    MoreHorizontal,
-    Search,
-    Filter,
     User,
-    ShoppingBag,
     CreditCard,
     Download
 } from "lucide-react"

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, User, Trophy, Medal } from "lucide-react"
+import { ArrowLeft, Trophy, Medal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,7 +13,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
 
 const topCustomers = [
     { rank: 1, name: "Sarah Wilson", orders: 24, spent: "৳45,800.00", aov: "৳1,908.33", lastOrder: "2024-05-21" },

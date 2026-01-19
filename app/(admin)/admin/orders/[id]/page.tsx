@@ -1,9 +1,9 @@
 "use client"
 
-import { ArrowLeft, Copy, MoreVertical, CreditCard, Truck, User, Mail, Phone, Calendar } from "lucide-react"
+import { ArrowLeft, MoreVertical, User, Mail, Phone } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
     DropdownMenu,

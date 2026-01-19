@@ -100,9 +100,19 @@ function SignInForm() {
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="customer">Customer</TabsTrigger>
-                    <TabsTrigger value="merchant">Merchant</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 p-1 bg-muted/50 rounded-xl h-12">
+                    <TabsTrigger
+                        value="customer"
+                        className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm h-10 font-bold"
+                    >
+                        Customer
+                    </TabsTrigger>
+                    <TabsTrigger
+                        value="merchant"
+                        className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm h-10 font-bold"
+                    >
+                        Merchant
+                    </TabsTrigger>
                 </TabsList>
             </Tabs>
 

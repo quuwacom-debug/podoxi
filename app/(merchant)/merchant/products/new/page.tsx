@@ -7,7 +7,6 @@ import {
     Upload,
     Plus,
     Info,
-    Package,
     DollarSign,
     Tag,
     FileText

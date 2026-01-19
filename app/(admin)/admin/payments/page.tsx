@@ -3,7 +3,6 @@
 import Link from "next/link"
 import {
     ArrowUpRight,
-    CreditCard,
     DollarSign,
     Download,
     TrendingUp,

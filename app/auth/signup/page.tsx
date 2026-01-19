@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -48,7 +49,8 @@ function SignUpForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const roleParam = searchParams.get('role');
-    const isMerchantSignup = roleParam === 'merchant';
+    const [activeTab, setActiveTab] = React.useState<string>(roleParam === 'merchant' ? 'merchant' : 'customer');
+    const isMerchantSignup = activeTab === 'merchant';
 
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -93,12 +95,29 @@ function SignUpForm() {
                     </Link>
                 </div>
                 <h1 className="text-3xl font-bold">{isMerchantSignup ? 'Merchant Registration' : 'Create an Account'}</h1>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                     {isMerchantSignup
                         ? 'Start selling your digital products on PRODOXI today'
-                        : 'Join our community of thousands of digital creators and buyers'}
+                        : 'Join our community of digital creators and buyers'}
                 </p>
             </div>
+
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 p-1 bg-muted/50 rounded-xl h-12">
+                    <TabsTrigger
+                        value="customer"
+                        className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm h-10 font-bold"
+                    >
+                        Customer
+                    </TabsTrigger>
+                    <TabsTrigger
+                        value="merchant"
+                        className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm h-10 font-bold"
+                    >
+                        Merchant
+                    </TabsTrigger>
+                </TabsList>
+            </Tabs>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">

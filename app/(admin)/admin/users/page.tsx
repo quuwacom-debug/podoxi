@@ -4,10 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import {
     MoreHorizontal,
-    Search,
-    Filter,
     UserPlus,
-    Mail,
     Shield,
     Ban,
     Download

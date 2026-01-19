@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowUpRight, GripVertical, Image as ImageIcon, Plus, Save, Star, Trophy } from "lucide-react"
+import { GripVertical, Image as ImageIcon, Plus, Save, Star, Trophy } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,7 +14,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
+
 import { Badge } from "@/components/ui/badge"
 
 const featuredProducts = [
