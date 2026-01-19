@@ -36,10 +36,12 @@ export default function BecomeSellerPage() {
                             manage your products with ease, and get paid instantly.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                            <Button size="lg" className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 group">
-                                Open Your Store
-                                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                            </Button>
+                            <Link href="/auth/signup?role=merchant">
+                                <Button size="lg" className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 group">
+                                    Open Your Store
+                                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+                            </Link>
                             <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold border-slate-700 hover:bg-slate-900 text-white">
                                 View Seller Guide
                             </Button>
@@ -167,9 +169,11 @@ export default function BecomeSellerPage() {
                                     </div>
                                 ))}
                             </div>
-                            <Button size="lg" className="bg-gradient-primary h-14 px-8 font-bold shadow-xl shadow-primary/20">
-                                Get Started Now
-                            </Button>
+                            <Link href="/auth/signup?role=merchant">
+                                <Button size="lg" className="bg-gradient-primary h-14 px-8 font-bold shadow-xl shadow-primary/20">
+                                    Get Started Now
+                                </Button>
+                            </Link>
                         </div>
                         <div className="relative">
                             <div className="aspect-square rounded-3xl bg-slate-900 overflow-hidden shadow-2xl relative group">
@@ -275,7 +279,7 @@ export default function BecomeSellerPage() {
                         No setup fees, no monthly costs. We only win when you do.
                     </p>
                     <div className="flex justify-center gap-4">
-                        <Link href="/auth/signup">
+                        <Link href="/auth/signup?role=merchant">
                             <Button
                                 size="lg"
                                 className="bg-white hover:bg-white/95 h-16 px-12 text-xl font-bold rounded-2xl shadow-2xl border-none transition-all hover:scale-105 active:scale-95 group"

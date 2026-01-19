@@ -97,7 +97,9 @@ export default function DashboardOverview() {
                             <h3 className="text-xl font-bold">Try Marketplace Pro</h3>
                             <p className="text-xs text-white/70">Unlimited downloads and exclusive access to premium digital products.</p>
                         </div>
-                        <Button className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold shadow-lg">Upgrade Now</Button>
+                        <Link href="/shop" className="w-full">
+                            <Button className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold shadow-lg">Upgrade Now</Button>
+                        </Link>
                     </Card>
 
                     <Card className="p-6 border-muted-foreground/10 space-y-4">

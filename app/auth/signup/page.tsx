@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -13,7 +14,11 @@ import {
     ArrowRight,
     ShieldCheck,
     CheckCircle2,
-    Check
+    Check,
+    MessageSquare,
+    Store,
+    User2,
+    Phone
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,16 +29,30 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
 const signupSchema = z.object({
-    fullName: z.string().min(3, 'Full name is required'),
+    firstName: z.string().min(2, 'First name is required'),
+    lastName: z.string().min(2, 'Last name is required'),
     email: z.string().email('Invalid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
+    whatsapp: z.string().optional(),
+    storeName: z.string().optional(),
     terms: z.boolean().refine(val => val === true, 'You must accept the terms'),
+}).refine((data) => {
+    // If it's intended to be merchant specific in a real app, we'd check role here
+    // But for now we just allow them in the schema
+    return true;
+}, {
+    message: "Store name is required for merchants",
+    path: ["storeName"]
 });
 
 type SignUpData = z.infer<typeof signupSchema>;
 
 export default function SignUpPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const roleParam = searchParams.get('role');
+    const isMerchantSignup = roleParam === 'merchant';
+
     const [isLoading, setIsLoading] = React.useState(false);
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<SignUpData>({
@@ -49,8 +68,15 @@ export default function SignUpPage() {
         setIsLoading(true);
         await new Promise(resolve => setTimeout(resolve, 1500));
         setIsLoading(false);
-        toast.success('Account created successfully!');
-        router.push('/auth/signin');
+        toast.success(isMerchantSignup ? 'Merchant account created!' : 'Account created successfully!');
+
+        // For demo purposes, we can redirect directly or to signin
+        // If we want to simulate auto-login, we could call login() here too if we imported store
+        if (isMerchantSignup) {
+            router.push('/auth/signin?email=' + data.email + '&role=merchant'); // Hint: In a real app we might auto-login
+        } else {
+            router.push('/auth/signin');
+        }
     };
 
     return (
@@ -91,27 +117,53 @@ export default function SignUpPage() {
                     <div className="text-center space-y-2">
                         <div className="flex justify-center mb-6">
                             <Link href="/" className="inline-flex items-center gap-2">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center font-bold text-white text-2xl">P</div>
-                                <span className="text-3xl font-bold bg-gradient-sidebar bg-clip-text text-transparent">PRODOXI</span>
+                                <Image
+                                    src="/prodoximain.png"
+                                    alt="PRODOXI"
+                                    width={180}
+                                    height={50}
+                                    className="h-12 w-auto"
+                                    priority
+                                />
                             </Link>
                         </div>
-                        <h1 className="text-3xl font-bold">Create an Account</h1>
-                        <p className="text-muted-foreground">Join our community of thousands of digital creators and buyers</p>
+                        <h1 className="text-3xl font-bold">{isMerchantSignup ? 'Merchant Registration' : 'Create an Account'}</h1>
+                        <p className="text-muted-foreground">
+                            {isMerchantSignup
+                                ? 'Start selling your digital products on PRODOXI today'
+                                : 'Join our community of thousands of digital creators and buyers'}
+                        </p>
                     </div>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                        <div className="space-y-2">
-                            <Label htmlFor="fullName">Full Name</Label>
-                            <div className="relative">
-                                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    id="fullName"
-                                    placeholder="John Doe"
-                                    className={cn("pl-10 h-12", errors.fullName && "border-red-500")}
-                                    {...register('fullName')}
-                                />
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="firstName">First Name</Label>
+                                <div className="relative">
+                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                    <Input
+                                        id="firstName"
+                                        placeholder="John"
+                                        className={cn("pl-10 h-11", errors.firstName && "border-red-500")}
+                                        {...register('firstName')}
+                                    />
+                                </div>
+                                {errors.firstName && <p className="text-xs text-red-500">{errors.firstName.message}</p>}
                             </div>
-                            {errors.fullName && <p className="text-xs text-red-500">{errors.fullName.message}</p>}
+
+                            <div className="space-y-2">
+                                <Label htmlFor="lastName">Last Name</Label>
+                                <div className="relative">
+                                    <User2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                    <Input
+                                        id="lastName"
+                                        placeholder="Doe"
+                                        className={cn("pl-10 h-11", errors.lastName && "border-red-500")}
+                                        {...register('lastName')}
+                                    />
+                                </div>
+                                {errors.lastName && <p className="text-xs text-red-500">{errors.lastName.message}</p>}
+                            </div>
                         </div>
 
                         <div className="space-y-2">
@@ -122,12 +174,44 @@ export default function SignUpPage() {
                                     id="email"
                                     type="email"
                                     placeholder="name@example.com"
-                                    className={cn("pl-10 h-12", errors.email && "border-red-500")}
+                                    className={cn("pl-10 h-11", errors.email && "border-red-500")}
                                     {...register('email')}
                                 />
                             </div>
                             {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
                         </div>
+
+                        {isMerchantSignup && (
+                            <>
+                                <div className="space-y-2">
+                                    <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                                    <div className="relative">
+                                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                        <Input
+                                            id="whatsapp"
+                                            placeholder="+880 1XXX XXXXXX"
+                                            className={cn("pl-10 h-11", errors.whatsapp && "border-red-500")}
+                                            {...register('whatsapp')}
+                                        />
+                                    </div>
+                                    {errors.whatsapp && <p className="text-xs text-red-500">{errors.whatsapp.message}</p>}
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="storeName">Store Name</Label>
+                                    <div className="relative">
+                                        <Store className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                        <Input
+                                            id="storeName"
+                                            placeholder="Your Digital Store"
+                                            className={cn("pl-10 h-11", errors.storeName && "border-red-500")}
+                                            {...register('storeName')}
+                                        />
+                                    </div>
+                                    {errors.storeName && <p className="text-xs text-red-500">{errors.storeName.message}</p>}
+                                </div>
+                            </>
+                        )}
 
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
@@ -137,7 +221,7 @@ export default function SignUpPage() {
                                     id="password"
                                     type="password"
                                     placeholder="••••••••"
-                                    className={cn("pl-10 h-12", errors.password && "border-red-500")}
+                                    className={cn("pl-10 h-11", errors.password && "border-red-500")}
                                     {...register('password')}
                                 />
                             </div>

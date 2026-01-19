@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -19,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -32,9 +34,18 @@ type SignInData = z.infer<typeof signinSchema>;
 
 export default function SignInPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const roleParam = searchParams.get('role');
     const { login } = useAuthStore();
     const [showPassword, setShowPassword] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [activeTab, setActiveTab] = React.useState<string>('customer');
+
+    React.useEffect(() => {
+        if (roleParam === 'merchant') {
+            setActiveTab('merchant');
+        }
+    }, [roleParam]);
 
     const { register, handleSubmit, formState: { errors } } = useForm<SignInData>({
         resolver: zodResolver(signinSchema),
@@ -45,15 +56,31 @@ export default function SignInPage() {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
 
+        // Determine role based on selected tab
+        let role = activeTab;
+
+        // Easter egg: keep the magic email check if they are on customer tab but type merchant email?
+        // Maybe better to enforce the tab selection for clarity.
+        // Let's stick to the tab being the source of truth, unless the email explicitly overrides for testing convenience.
+        if (data.email.toLowerCase().includes('merchant')) {
+            role = 'merchant';
+        }
+
         login({
             id: '1',
             name: 'John Doe',
             email: data.email,
+            role: role as any,
         });
 
         setIsLoading(false);
-        toast.success('Signed in successfully!');
-        router.push('/dashboard');
+        toast.success(`Signed in as ${role}!`);
+
+        if (role === 'merchant') {
+            router.push('/merchant');
+        } else {
+            router.push('/dashboard');
+        }
     };
 
     return (
@@ -64,13 +91,26 @@ export default function SignInPage() {
                     <div className="text-center space-y-2">
                         <div className="flex justify-center mb-6">
                             <Link href="/" className="inline-flex items-center gap-2">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center font-bold text-white text-2xl">P</div>
-                                <span className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">PRODOXI</span>
+                                <Image
+                                    src="/prodoximain.png"
+                                    alt="PRODOXI"
+                                    width={180}
+                                    height={50}
+                                    className="h-12 w-auto"
+                                    priority
+                                />
                             </Link>
                         </div>
                         <h1 className="text-3xl font-bold">Welcome Back</h1>
                         <p className="text-muted-foreground">Sign in to access your digital assets and account</p>
                     </div>
+
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                        <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value="customer">Customer</TabsTrigger>
+                            <TabsTrigger value="merchant">Merchant</TabsTrigger>
+                        </TabsList>
+                    </Tabs>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                         <div className="space-y-2">
@@ -137,7 +177,7 @@ export default function SignInPage() {
                     </div>
 
                     <p className="text-center text-sm text-muted-foreground">
-                        Don't have an account? <Link href="/auth/signup" className="text-primary font-bold hover:underline">Create an account</Link>
+                        Don't have an account? <Link href={activeTab === 'merchant' ? "/auth/signup?role=merchant" : "/auth/signup"} className="text-primary font-bold hover:underline">Create an account</Link>
                     </p>
                 </div>
             </div>

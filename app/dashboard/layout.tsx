@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
     LayoutDashboard,
     Library,
@@ -29,7 +29,13 @@ const sidebarLinks = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
+    const router = useRouter();
     const { user, logout } = useAuthStore();
+
+    const handleLogout = () => {
+        logout();
+        router.push('/');
+    };
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -79,7 +85,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <Button
                             variant="ghost"
                             className="w-full justify-start text-muted-foreground hover:text-red-500 hover:bg-red-50"
-                            onClick={logout}
+                            onClick={handleLogout}
                         >
                             <LogOut className="mr-3 h-5 w-5" />
                             Sign Out
@@ -97,8 +103,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <main className="flex-1 min-w-0">
                     {children}
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 

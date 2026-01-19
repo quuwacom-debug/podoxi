@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShoppingCart, Menu, X, Search, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/search/search-bar';
@@ -26,12 +27,14 @@ export function Header() {
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2" onClick={closeAll}>
-                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-primary">
-                            <span className="text-2xl font-bold text-white">P</span>
-                        </div>
-                        <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                            PRODOXI
-                        </span>
+                        <Image
+                            src="/prodoximain.png"
+                            alt="PRODOXI"
+                            width={140}
+                            height={40}
+                            className="h-10 w-auto"
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}

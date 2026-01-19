@@ -14,6 +14,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { RevenueChart } from "@/components/admin/dashboard/RevenueChart" // Reusing UI components
+import Link from "next/link"
+import { toast } from "sonner"
 
 const metrics = [
     {
@@ -63,8 +65,16 @@ export default function MerchantDashboard() {
                     <p className="text-muted-foreground">Welcome back! View your store performance and manage your assets.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button variant="outline" className="border-primary/20 hover:bg-primary/5">Download Report</Button>
-                    <Button className="bg-gradient-primary">Add New Product</Button>
+                    <Button
+                        variant="outline"
+                        className="border-primary/20 hover:bg-primary/5"
+                        onClick={() => toast.success("Report generation started. You will be notified when it's ready.")}
+                    >
+                        Download Report
+                    </Button>
+                    <Button className="bg-gradient-primary" asChild>
+                        <Link href="/merchant/products/new">Add New Product</Link>
+                    </Button>
                 </div>
             </div>
 

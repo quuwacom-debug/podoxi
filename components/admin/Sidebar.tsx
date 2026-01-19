@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import {
     LayoutDashboard,
@@ -49,8 +50,13 @@ export function Sidebar() {
         <div className="flex h-full w-64 flex-col border-r bg-card text-card-foreground">
             <div className="flex h-14 items-center border-b px-6">
                 <Link href="/admin" className="flex items-center gap-2 font-bold text-xl">
-                    <Monitor className="h-6 w-6" />
-                    <span>PRODOXI</span>
+                    <Image
+                        src="/prodoximain.png"
+                        alt="PRODOXI"
+                        width={130}
+                        height={32}
+                        className="h-8 w-auto"
+                    />
                 </Link>
             </div>
             <div className="flex-1 overflow-y-auto py-4">

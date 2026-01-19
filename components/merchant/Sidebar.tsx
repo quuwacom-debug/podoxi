@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import {
     LayoutDashboard,
@@ -42,8 +43,24 @@ export function MerchantSidebar() {
         )}>
             <div className="flex h-16 items-center px-6 border-b">
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">P</div>
-                    {!isCollapsed && <span className="text-xl font-bold tracking-tight">PRODOXI</span>}
+                    {isCollapsed ? (
+                        <div className="relative w-8 h-8">
+                            <Image
+                                src="/icon.png"
+                                alt="P"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                    ) : (
+                        <Image
+                            src="/prodoximain.png"
+                            alt="PRODOXI"
+                            width={130}
+                            height={32}
+                            className="h-8 w-auto"
+                        />
+                    )}
                 </Link>
             </div>
 

@@ -26,6 +26,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { mockProducts } from "@/lib/data/mock-data"
+import Link from "next/link"
 
 export default function MerchantProductsPage() {
     const merchantProducts = mockProducts.slice(0, 5); // Simulating merchant's own products
@@ -37,8 +38,10 @@ export default function MerchantProductsPage() {
                     <h1 className="text-3xl font-bold tracking-tight italic">My Products</h1>
                     <p className="text-muted-foreground">Manage your digital assets and publications.</p>
                 </div>
-                <Button className="bg-gradient-primary h-12 px-6 font-bold shadow-lg shadow-primary/20">
-                    <Plus className="mr-2 h-5 w-5" /> Add New Product
+                <Button className="bg-gradient-primary h-12 px-6 font-bold shadow-lg shadow-primary/20" asChild>
+                    <Link href="/merchant/products/new">
+                        <Plus className="mr-2 h-5 w-5" /> Add New Product
+                    </Link>
                 </Button>
             </div>
 

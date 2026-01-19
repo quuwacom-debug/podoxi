@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
 
 export function Footer() {
@@ -28,12 +29,13 @@ export function Footer() {
                     {/* Logo & Description */}
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center space-x-2">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-primary">
-                                <span className="text-2xl font-bold text-white">P</span>
-                            </div>
-                            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                                PRODOXI
-                            </span>
+                            <Image
+                                src="/prodoximain.png"
+                                alt="PRODOXI"
+                                width={140}
+                                height={40}
+                                className="h-10 w-auto"
+                            />
                         </Link>
                         <p className="text-sm text-muted-foreground max-w-xs">
                             Bangladesh&apos;s premier multi-vendor digital product marketplace. Discover, purchase, and access digital products with ease.
