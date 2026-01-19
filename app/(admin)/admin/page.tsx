@@ -2,7 +2,6 @@ import {
     CreditCard,
     DollarSign,
     Users,
-    Package,
     Activity
 } from "lucide-react"
 import { RevenueChart } from "@/components/admin/dashboard/RevenueChart"

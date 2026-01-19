@@ -21,7 +21,7 @@ export default function CartPage() {
                     </div>
                     <h1 className="text-2xl font-bold">Your cart is empty</h1>
                     <p className="text-muted-foreground max-w-sm">
-                        Looks like you haven't added any digital products to your cart yet.
+                        Looks like you haven&apos;t added any digital products to your cart yet.
                     </p>
                     <Button onClick={() => router.push('/shop')} className="bg-gradient-primary">
                         Start Shopping

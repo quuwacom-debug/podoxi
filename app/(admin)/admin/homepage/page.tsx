@@ -52,7 +52,7 @@ export default function HomepageSettingsPage() {
                             Top Selling Products
                         </CardTitle>
                         <CardDescription>
-                            Control which products appear in the "Trending" section.
+                            Control which products appear in the &quot;Trending&quot; section.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">

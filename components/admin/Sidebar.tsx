@@ -13,8 +13,7 @@ import {
     Settings,
     CreditCard,
     BarChart,
-    Home,
-    Monitor
+    Home
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 

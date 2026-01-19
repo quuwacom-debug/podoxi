@@ -17,7 +17,7 @@ export default function OrdersPage() {
                 </div>
                 <div>
                     <h3 className="font-bold">No orders found</h3>
-                    <p className="text-sm text-muted-foreground">You haven't made any purchases yet.</p>
+                    <p className="text-sm text-muted-foreground">You haven&apos;t made any purchases yet.</p>
                 </div>
             </Card>
         </div>

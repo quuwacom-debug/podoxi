@@ -15,8 +15,18 @@ const pendingProducts = [
     { id: "PRD-004", name: "3D Character Set", merchant: "PixelArt", category: "3D Assets", price: "৳2,200", date: "2026-01-14", status: "Pending" },
 ]
 
+interface PendingProduct {
+    id: string
+    name: string
+    merchant: string
+    category: string
+    price: string
+    date: string
+    status: string
+}
+
 export default function PendingProductsPage() {
-    const [selectedProduct, setSelectedProduct] = useState<any>(null)
+    const [selectedProduct, setSelectedProduct] = useState<PendingProduct | null>(null)
 
     return (
         <div className="flex flex-col gap-6">
@@ -76,7 +86,7 @@ export default function PendingProductsPage() {
             </Card>
 
             <ProductReviewDialog
-                product={selectedProduct}
+                product={selectedProduct as unknown as Parameters<typeof ProductReviewDialog>[0]['product']}
                 open={!!selectedProduct}
                 onOpenChange={(open) => !open && setSelectedProduct(null)}
             />

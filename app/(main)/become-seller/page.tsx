@@ -9,8 +9,7 @@ import {
     ArrowRight,
     CheckCircle2,
     Users,
-    DollarSign,
-    Package
+    DollarSign
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -237,7 +236,7 @@ export default function BecomeSellerPage() {
                                     {[1, 2, 3, 4, 5].map((s) => <CheckCircle2 key={s} className="h-4 w-4 fill-current" />)}
                                 </div>
                                 <p className="text-lg italic text-slate-700">
-                                    "Prodoxi transformed my side hustle into a full-time business. The instant delivery feature alone saved me 10+ hours a week."
+                                    &quot;Prodoxi transformed my side hustle into a full-time business. The instant delivery feature alone saved me 10+ hours a week.&quot;
                                 </p>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-full bg-slate-300" />
@@ -254,7 +253,7 @@ export default function BecomeSellerPage() {
                                     {[1, 2, 3, 4, 5].map((s) => <CheckCircle2 key={s} className="h-4 w-4 fill-current" />)}
                                 </div>
                                 <p className="text-lg italic text-slate-700">
-                                    "Finally, a digital marketplace that works with local payment methods. My sales tripled once I switched to Prodoxi."
+                                    &quot;Finally, a digital marketplace that works with local payment methods. My sales tripled once I switched to Prodoxi.&quot;
                                 </p>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-full bg-slate-300" />

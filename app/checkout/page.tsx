@@ -115,7 +115,7 @@ export default function CheckoutPage() {
 
                         <RadioGroup
                             value={paymentMethod}
-                            onValueChange={(val) => setValue('paymentMethod', val as any)}
+                            onValueChange={(val) => setValue('paymentMethod', val as 'bkash' | 'nagad' | 'card')}
                             className="grid grid-cols-1 sm:grid-cols-3 gap-4"
                         >
                             {[
@@ -151,7 +151,7 @@ export default function CheckoutPage() {
                                     <h4 className="font-bold text-[#E2136E]">bKash Payment Instructions</h4>
                                     <ol className="text-sm text-muted-foreground list-decimal pl-4 space-y-1">
                                         <li>Log in to your bKash app</li>
-                                        <li>Choose "Make Payment"</li>
+                                        <li>Choose &quot;Make Payment&quot;</li>
                                         <li>Enter Merchant Number: 01700-000000</li>
                                         <li>Enter Amount: ৳{getTotalPrice().toLocaleString()}</li>
                                         <li>Confirm with your PIN</li>
@@ -163,7 +163,7 @@ export default function CheckoutPage() {
                                     <h4 className="font-bold text-[#F7941D]">Nagad Payment Instructions</h4>
                                     <ol className="text-sm text-muted-foreground list-decimal pl-4 space-y-1">
                                         <li>Log in to your Nagad app</li>
-                                        <li>Select "Payment"</li>
+                                        <li>Select &quot;Payment&quot;</li>
                                         <li>Enter Merchant Number: 01800-000000</li>
                                         <li>Enter Amount: ৳{getTotalPrice().toLocaleString()}</li>
                                         <li>Complete the transaction</li>

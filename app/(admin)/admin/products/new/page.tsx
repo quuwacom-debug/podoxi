@@ -155,7 +155,7 @@ export default function AddProductPage() {
                             </div>
                             <div className="flex items-center justify-between space-x-2">
                                 <Label htmlFor="editors-choice" className="flex flex-col space-y-1">
-                                    <span>Editor's Choice</span>
+                                    <span>Editor&apos;s Choice</span>
                                     <span className="font-normal text-xs text-muted-foreground">Add badge</span>
                                 </Label>
                                 <Switch id="editors-choice" />

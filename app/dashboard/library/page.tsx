@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { mockProducts } from '@/lib/data/mock-data';
-import { cn } from '@/lib/utils';
+
 
 export default function LibraryPage() {
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -93,7 +93,7 @@ export default function LibraryPage() {
                         <Search className="h-8 w-8 text-muted-foreground" />
                     </div>
                     <h3 className="text-xl font-bold">No products found</h3>
-                    <p className="text-muted-foreground">You haven't purchased any digital assets yet.</p>
+                    <p className="text-muted-foreground">You haven&apos;t purchased any digital assets yet.</p>
                     <Button onClick={() => window.location.href = '/shop'}>Go to Marketplace</Button>
                 </div>
             )}

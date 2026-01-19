@@ -49,7 +49,7 @@ export default function AddCategoryPage() {
                                 <Label htmlFor="slug">Slug</Label>
                                 <Input id="slug" placeholder="e.g. ui-kits" />
                                 <p className="text-[0.8rem] text-muted-foreground">
-                                    The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+                                    The &quot;slug&quot; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
                                 </p>
                             </div>
 

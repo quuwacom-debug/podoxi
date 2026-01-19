@@ -5,9 +5,7 @@ import {
     TrendingUp,
     CreditCard,
     ArrowUpRight,
-    ArrowDownRight,
-    Download,
-    Calendar
+    Download
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -149,6 +147,6 @@ export default function EarningsPage() {
     )
 }
 
-function cn(...inputs: any[]) {
+function cn(...inputs: unknown[]) {
     return inputs.filter(Boolean).join(" ");
 }

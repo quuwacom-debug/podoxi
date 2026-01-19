@@ -9,7 +9,7 @@ import { mockProducts, categories } from '@/lib/data/mock-data';
 import { cn } from '@/lib/utils';
 import { useProductStore } from '@/lib/stores/product-store';
 import { Button } from '@/components/ui/button';
-import { Grid, List, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
+import { Grid, List, SlidersHorizontal } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -124,7 +124,7 @@ function ShopContent() {
 
                         <div className="flex items-center gap-2">
                             <span className="text-sm text-muted-foreground hidden sm:inline">Sort by:</span>
-                            <Select value={filters.sortBy} onValueChange={(val) => setSortBy(val as any)}>
+                            <Select value={filters.sortBy} onValueChange={(val) => setSortBy(val as 'newest' | 'price-low-high' | 'price-high-low' | 'best-rated' | 'popular')}>
                                 <SelectTrigger className="w-[180px] h-9">
                                     <SelectValue placeholder="Sort by" />
                                 </SelectTrigger>

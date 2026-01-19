@@ -12,10 +12,7 @@ import {
     Lock,
     User,
     ArrowRight,
-    ShieldCheck,
-    CheckCircle2,
     Check,
-    MessageSquare,
     Store,
     User2,
     Phone
@@ -36,7 +33,7 @@ const signupSchema = z.object({
     whatsapp: z.string().optional(),
     storeName: z.string().optional(),
     terms: z.boolean().refine(val => val === true, 'You must accept the terms'),
-}).refine((data) => {
+}).refine(() => {
     // If it's intended to be merchant specific in a real app, we'd check role here
     // But for now we just allow them in the schema
     return true;
@@ -47,7 +44,7 @@ const signupSchema = z.object({
 
 type SignUpData = z.infer<typeof signupSchema>;
 
-export default function SignUpPage() {
+function SignUpForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const roleParam = searchParams.get('role');
@@ -65,6 +62,7 @@ export default function SignUpPage() {
     const termsChecked = watch('terms');
 
     const onSubmit = async (data: SignUpData) => {
+        // data is used in line 76
         setIsLoading(true);
         await new Promise(resolve => setTimeout(resolve, 1500));
         setIsLoading(false);
@@ -79,6 +77,173 @@ export default function SignUpPage() {
         }
     };
 
+    return (
+        <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+            <div className="text-center space-y-2">
+                <div className="flex justify-center mb-6">
+                    <Link href="/" className="inline-flex items-center gap-2">
+                        <Image
+                            src="/prodoximain.png"
+                            alt="PRODOXI"
+                            width={180}
+                            height={50}
+                            className="h-12 w-auto"
+                            priority
+                        />
+                    </Link>
+                </div>
+                <h1 className="text-3xl font-bold">{isMerchantSignup ? 'Merchant Registration' : 'Create an Account'}</h1>
+                <p className="text-muted-foreground">
+                    {isMerchantSignup
+                        ? 'Start selling your digital products on PRODOXI today'
+                        : 'Join our community of thousands of digital creators and buyers'}
+                </p>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="firstName">First Name</Label>
+                        <div className="relative">
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                id="firstName"
+                                placeholder="John"
+                                className={cn("pl-10 h-11", errors.firstName && "border-red-500")}
+                                {...register('firstName')}
+                            />
+                        </div>
+                        {errors.firstName && <p className="text-xs text-red-500">{errors.firstName.message}</p>}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="lastName">Last Name</Label>
+                        <div className="relative">
+                            <User2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                id="lastName"
+                                placeholder="Doe"
+                                className={cn("pl-10 h-11", errors.lastName && "border-red-500")}
+                                {...register('lastName')}
+                            />
+                        </div>
+                        {errors.lastName && <p className="text-xs text-red-500">{errors.lastName.message}</p>}
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="name@example.com"
+                            className={cn("pl-10 h-11", errors.email && "border-red-500")}
+                            {...register('email')}
+                        />
+                    </div>
+                    {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+                </div>
+
+                {isMerchantSignup && (
+                    <>
+                        <div className="space-y-2">
+                            <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                            <div className="relative">
+                                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    id="whatsapp"
+                                    placeholder="+880 1XXX XXXXXX"
+                                    className={cn("pl-10 h-11", errors.whatsapp && "border-red-500")}
+                                    {...register('whatsapp')}
+                                />
+                            </div>
+                            {errors.whatsapp && <p className="text-xs text-red-500">{errors.whatsapp.message}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="storeName">Store Name</Label>
+                            <div className="relative">
+                                <Store className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    id="storeName"
+                                    placeholder="Your Digital Store"
+                                    className={cn("pl-10 h-11", errors.storeName && "border-red-500")}
+                                    {...register('storeName')}
+                                />
+                            </div>
+                            {errors.storeName && <p className="text-xs text-red-500">{errors.storeName.message}</p>}
+                        </div>
+                    </>
+                )}
+
+                <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            id="password"
+                            type="password"
+                            placeholder="••••••••"
+                            className={cn("pl-10 h-11", errors.password && "border-red-500")}
+                            {...register('password')}
+                        />
+                    </div>
+                    {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
+                </div>
+
+                <div className="flex items-start space-x-2 py-2">
+                    <Checkbox
+                        id="terms"
+                        checked={termsChecked}
+                        onCheckedChange={(checked) => setValue('terms', !!checked)}
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                        <Label
+                            htmlFor="terms"
+                            className="text-sm font-medium leading-none cursor-pointer"
+                        >
+                            Accept terms and conditions
+                        </Label>
+                        <p className="text-xs text-muted-foreground">
+                            You agree to our <Link href="/terms" className="text-primary hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+                        </p>
+                        {errors.terms && <p className="text-[10px] text-red-500">{errors.terms.message}</p>}
+                    </div>
+                </div>
+
+                <Button type="submit" className="w-full h-13 bg-gradient-sidebar font-bold text-lg" disabled={isLoading}>
+                    {isLoading ? (
+                        <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                        <>
+                            Create Account
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </>
+                    )}
+                </Button>
+            </form>
+
+            <div className="relative">
+                <div className="absolute inset-0 flex items-center"><Separator /></div>
+                <div className="relative flex justify-center text-xs uppercase"><span className="bg-background px-2 text-muted-foreground">Or sign up with</span></div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+                <Button variant="outline" className="h-11">
+                    <Image src="/google.svg" alt="Google" width={16} height={16} className="h-4 w-4 mr-2" /> Google
+                </Button>
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground">
+                Already have an account? <Link href="/auth/signin" className="text-primary font-bold hover:underline">Sign In</Link>
+            </p>
+        </div>
+    );
+}
+
+export default function SignUpPage() {
     return (
         <div className="min-h-screen flex">
             {/* Right Side - Visual/Hero (Reversed for variation) */}
@@ -113,168 +278,9 @@ export default function SignUpPage() {
 
             {/* Left Side - Form */}
             <div className="flex-1 flex flex-col justify-center items-center p-8 bg-background">
-                <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-                    <div className="text-center space-y-2">
-                        <div className="flex justify-center mb-6">
-                            <Link href="/" className="inline-flex items-center gap-2">
-                                <Image
-                                    src="/prodoximain.png"
-                                    alt="PRODOXI"
-                                    width={180}
-                                    height={50}
-                                    className="h-12 w-auto"
-                                    priority
-                                />
-                            </Link>
-                        </div>
-                        <h1 className="text-3xl font-bold">{isMerchantSignup ? 'Merchant Registration' : 'Create an Account'}</h1>
-                        <p className="text-muted-foreground">
-                            {isMerchantSignup
-                                ? 'Start selling your digital products on PRODOXI today'
-                                : 'Join our community of thousands of digital creators and buyers'}
-                        </p>
-                    </div>
-
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="firstName">First Name</Label>
-                                <div className="relative">
-                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input
-                                        id="firstName"
-                                        placeholder="John"
-                                        className={cn("pl-10 h-11", errors.firstName && "border-red-500")}
-                                        {...register('firstName')}
-                                    />
-                                </div>
-                                {errors.firstName && <p className="text-xs text-red-500">{errors.firstName.message}</p>}
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="lastName">Last Name</Label>
-                                <div className="relative">
-                                    <User2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input
-                                        id="lastName"
-                                        placeholder="Doe"
-                                        className={cn("pl-10 h-11", errors.lastName && "border-red-500")}
-                                        {...register('lastName')}
-                                    />
-                                </div>
-                                {errors.lastName && <p className="text-xs text-red-500">{errors.lastName.message}</p>}
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email Address</Label>
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="name@example.com"
-                                    className={cn("pl-10 h-11", errors.email && "border-red-500")}
-                                    {...register('email')}
-                                />
-                            </div>
-                            {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
-                        </div>
-
-                        {isMerchantSignup && (
-                            <>
-                                <div className="space-y-2">
-                                    <Label htmlFor="whatsapp">WhatsApp Number</Label>
-                                    <div className="relative">
-                                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                        <Input
-                                            id="whatsapp"
-                                            placeholder="+880 1XXX XXXXXX"
-                                            className={cn("pl-10 h-11", errors.whatsapp && "border-red-500")}
-                                            {...register('whatsapp')}
-                                        />
-                                    </div>
-                                    {errors.whatsapp && <p className="text-xs text-red-500">{errors.whatsapp.message}</p>}
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="storeName">Store Name</Label>
-                                    <div className="relative">
-                                        <Store className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                        <Input
-                                            id="storeName"
-                                            placeholder="Your Digital Store"
-                                            className={cn("pl-10 h-11", errors.storeName && "border-red-500")}
-                                            {...register('storeName')}
-                                        />
-                                    </div>
-                                    {errors.storeName && <p className="text-xs text-red-500">{errors.storeName.message}</p>}
-                                </div>
-                            </>
-                        )}
-
-                        <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    className={cn("pl-10 h-11", errors.password && "border-red-500")}
-                                    {...register('password')}
-                                />
-                            </div>
-                            {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
-                        </div>
-
-                        <div className="flex items-start space-x-2 py-2">
-                            <Checkbox
-                                id="terms"
-                                checked={termsChecked}
-                                onCheckedChange={(checked) => setValue('terms', !!checked)}
-                            />
-                            <div className="grid gap-1.5 leading-none">
-                                <Label
-                                    htmlFor="terms"
-                                    className="text-sm font-medium leading-none cursor-pointer"
-                                >
-                                    Accept terms and conditions
-                                </Label>
-                                <p className="text-xs text-muted-foreground">
-                                    You agree to our <Link href="/terms" className="text-primary hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
-                                </p>
-                                {errors.terms && <p className="text-[10px] text-red-500">{errors.terms.message}</p>}
-                            </div>
-                        </div>
-
-                        <Button type="submit" className="w-full h-13 bg-gradient-sidebar font-bold text-lg" disabled={isLoading}>
-                            {isLoading ? (
-                                <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            ) : (
-                                <>
-                                    Create Account
-                                    <ArrowRight className="ml-2 h-5 w-5" />
-                                </>
-                            )}
-                        </Button>
-                    </form>
-
-                    <div className="relative">
-                        <div className="absolute inset-0 flex items-center"><Separator /></div>
-                        <div className="relative flex justify-center text-xs uppercase"><span className="bg-background px-2 text-muted-foreground">Or sign up with</span></div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                        <Button variant="outline" className="h-11">
-                            <img src="/google.svg" alt="" className="h-4 w-4 mr-2" /> Google
-                        </Button>
-                    </div>
-
-                    <p className="text-center text-sm text-muted-foreground">
-                        Already have an account? <Link href="/auth/signin" className="text-primary font-bold hover:underline">Sign In</Link>
-                    </p>
-                </div>
+                <React.Suspense fallback={<div className="h-5 w-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />}>
+                    <SignUpForm />
+                </React.Suspense>
             </div>
         </div>
     );

@@ -10,8 +10,6 @@ import {
     CheckCircle2,
     ShieldCheck,
     FileText,
-    MessageSquare,
-    HelpCircle,
     ThumbsUp,
     Share2,
     Heart,
@@ -24,7 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { mockProducts } from '@/lib/data/mock-data';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { RelatedProducts } from '@/components/products/related-products';
@@ -206,7 +204,7 @@ export default function ProductDetailPage() {
                             </div>
 
                             <div>
-                                <h3 className="text-xl font-bold mb-4">What's Included</h3>
+                                <h3 className="text-xl font-bold mb-4">What&apos;s Included</h3>
                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {['Full Source Files', 'Documentation PDF', 'Lifetime Updates', 'Premium Support', 'Commercial License', 'Multiple Formats'].map((item) => (
                                         <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">

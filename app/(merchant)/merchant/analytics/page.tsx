@@ -9,8 +9,7 @@ import {
     MousePointer2,
     Download,
     Calendar,
-    ArrowUpRight,
-    ArrowDownRight
+    ArrowUpRight
 } from "lucide-react"
 import { RevenueChart } from "@/components/admin/dashboard/RevenueChart"
 
@@ -20,7 +19,7 @@ export default function AnalyticsPage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Analytics & Insights</h1>
-                    <p className="text-muted-foreground">Deep dive into your store's performance metrics.</p>
+                    <p className="text-muted-foreground">Deep dive into your store&apos;s performance metrics.</p>
                 </div>
                 <div className="flex gap-2">
                     <Button variant="outline"><Calendar className="mr-2 h-4 w-4" /> Last 30 Days</Button>

@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -7,11 +8,6 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
     User,
-    Store,
-    CreditCard,
-    Bell,
-    Shield,
-    Mail,
     Camera,
     Check
 } from "lucide-react"
@@ -123,7 +119,7 @@ export default function MerchantSettings() {
                                 <div className="p-4 border rounded-xl flex items-center justify-between border-primary/50 bg-primary/5">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-lg bg-white border flex items-center justify-center p-2">
-                                            <img src="/bkash.svg" alt="bKash" className="w-full h-full object-contain" />
+                                            <Image src="/bkash.svg" alt="bKash" width={48} height={48} className="w-full h-full object-contain" />
                                         </div>
                                         <div>
                                             <p className="font-bold font-sans">bKash (Personal)</p>
@@ -135,7 +131,7 @@ export default function MerchantSettings() {
                                 <div className="p-4 border rounded-xl flex items-center justify-between hover:bg-muted/50 cursor-pointer">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-lg bg-white border flex items-center justify-center p-2">
-                                            <img src="/nagad.svg" alt="Nagad" className="w-full h-full object-contain" />
+                                            <Image src="/nagad.svg" alt="Nagad" width={48} height={48} className="w-full h-full object-contain" />
                                         </div>
                                         <div>
                                             <p className="font-bold font-sans">Nagad (Personal)</p>

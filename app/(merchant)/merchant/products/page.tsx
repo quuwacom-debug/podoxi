@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import Image from 'next/image'
+
 import {
     Plus,
     Search,
@@ -14,7 +15,7 @@ import {
     ArrowUpRight
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -77,7 +78,7 @@ export default function MerchantProductsPage() {
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-lg bg-muted border overflow-hidden shrink-0">
-                                                    <img src={product.thumbnail} alt="" className="w-full h-full object-cover" />
+                                                    <Image src={product.thumbnail} alt={product.name} width={48} height={48} className="w-full h-full object-cover" />
                                                 </div>
                                                 <div className="min-w-0">
                                                     <p className="font-bold truncate max-w-[200px] group-hover:text-primary transition-colors cursor-pointer">{product.name}</p>

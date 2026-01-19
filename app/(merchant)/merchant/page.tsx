@@ -188,6 +188,6 @@ export default function MerchantDashboard() {
     )
 }
 
-function cn(...inputs: any[]) {
+function cn(...inputs: unknown[]) {
     return inputs.filter(Boolean).join(" ");
 }

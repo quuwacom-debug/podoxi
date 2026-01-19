@@ -7,7 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 export default function ThankYouPage() {
-    const orderNumber = Math.floor(100000 + Math.random() * 900000);
+    const [orderNumber, setOrderNumber] = React.useState<number | null>(null);
+
+    React.useEffect(() => {
+        setOrderNumber(Math.floor(100000 + Math.random() * 900000));
+    }, []);
 
     return (
         <div className="container mx-auto px-4 py-20 flex flex-col items-center justify-center">
@@ -29,7 +33,7 @@ export default function ThankYouPage() {
                     <div className="space-y-2">
                         <h2 className="text-2xl font-bold">Access Your Files</h2>
                         <p className="text-muted-foreground">
-                            You can download your products immediately from your dashboard library. We've also sent the download links to your email.
+                            You can download your products immediately from your dashboard library. We&apos;ve also sent the download links to your email.
                         </p>
                     </div>
                     <Link href="/dashboard/library">

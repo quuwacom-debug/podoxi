@@ -69,8 +69,17 @@ const initialCategories = [
     }
 ]
 
+interface Category {
+    id: string
+    name: string
+    slug: string
+    productCount: number
+    status: string
+    children?: Category[]
+}
+
 interface CategoryItemProps {
-    category: any
+    category: Category
     depth?: number
 }
 
@@ -132,7 +141,7 @@ function CategoryItem({ category, depth = 0 }: CategoryItemProps) {
 
             {isOpen && hasChildren && (
                 <div className="border-l ml-6">
-                    {category.children.map((child: any) => (
+                    {category.children?.map((child: Category) => (
                         <CategoryItem key={child.id} category={child} depth={depth + 1} />
                     ))}
                 </div>

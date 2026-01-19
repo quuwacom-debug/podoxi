@@ -194,6 +194,6 @@ export default function OrdersPage() {
     )
 }
 
-function cn(...inputs: any[]) {
+function cn(...inputs: unknown[]) {
     return inputs.filter(Boolean).join(" ");
 }

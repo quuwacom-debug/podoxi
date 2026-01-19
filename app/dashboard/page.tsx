@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
     ShoppingBag,
     Download,
@@ -31,7 +32,7 @@ export default function DashboardOverview() {
         <div className="space-y-8 animate-in fade-in duration-500">
             <div>
                 <h1 className="text-3xl font-bold">Dashboard Overview</h1>
-                <p className="text-muted-foreground mt-1">Welcome back! Here's what's happening with your account.</p>
+                <p className="text-muted-foreground mt-1">Welcome back! Here&apos;s what&apos;s happening with your account.</p>
             </div>
 
             {/* Stats Grid */}
@@ -73,7 +74,7 @@ export default function DashboardOverview() {
                         {mockProducts.slice(0, 4).map((product, i) => (
                             <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-muted-foreground/5 hover:bg-muted/30 transition-colors group">
                                 <div className="w-12 h-12 rounded-lg bg-muted border overflow-hidden shrink-0">
-                                    <img src={product.thumbnail} alt="" className="w-full h-full object-cover" />
+                                    <Image src={product.thumbnail} alt={product.name} width={48} height={48} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <h4 className="font-bold text-sm truncate group-hover:text-primary transition-colors cursor-pointer">{product.name}</h4>

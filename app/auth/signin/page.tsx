@@ -32,7 +32,7 @@ const signinSchema = z.object({
 
 type SignInData = z.infer<typeof signinSchema>;
 
-export default function SignInPage() {
+function SignInForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const roleParam = searchParams.get('role');
@@ -59,9 +59,6 @@ export default function SignInPage() {
         // Determine role based on selected tab
         let role = activeTab;
 
-        // Easter egg: keep the magic email check if they are on customer tab but type merchant email?
-        // Maybe better to enforce the tab selection for clarity.
-        // Let's stick to the tab being the source of truth, unless the email explicitly overrides for testing convenience.
         if (data.email.toLowerCase().includes('merchant')) {
             role = 'merchant';
         }
@@ -70,7 +67,7 @@ export default function SignInPage() {
             id: '1',
             name: 'John Doe',
             email: data.email,
-            role: role as any,
+            role: role as 'customer' | 'merchant' | 'admin',
         });
 
         setIsLoading(false);
@@ -84,102 +81,110 @@ export default function SignInPage() {
     };
 
     return (
+        <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-left-4 duration-500">
+            <div className="text-center space-y-2">
+                <div className="flex justify-center mb-6">
+                    <Link href="/" className="inline-flex items-center gap-2">
+                        <Image
+                            src="/prodoximain.png"
+                            alt="PRODOXI"
+                            width={180}
+                            height={50}
+                            className="h-12 w-auto"
+                            priority
+                        />
+                    </Link>
+                </div>
+                <h1 className="text-3xl font-bold">Welcome Back</h1>
+                <p className="text-muted-foreground">Sign in to access your digital assets and account</p>
+            </div>
+
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="customer">Customer</TabsTrigger>
+                    <TabsTrigger value="merchant">Merchant</TabsTrigger>
+                </TabsList>
+            </Tabs>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="name@example.com"
+                            className={cn("pl-10 h-12", errors.email && "border-red-500")}
+                            {...register('email')}
+                        />
+                    </div>
+                    {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                        <Label htmlFor="password">Password</Label>
+                        <Link href="/auth/forgot-password" className="text-xs text-primary font-medium hover:underline">Forgot password?</Link>
+                    </div>
+                    <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            className={cn("pl-10 h-12", errors.password && "border-red-500")}
+                            {...register('password')}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        >
+                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
+                    </div>
+                    {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
+                </div>
+
+                <Button type="submit" className="w-full h-12 bg-gradient-primary font-bold text-lg" disabled={isLoading}>
+                    {isLoading ? (
+                        <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                        <>
+                            Sign In
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </>
+                    )}
+                </Button>
+            </form>
+
+            <div className="relative">
+                <div className="absolute inset-0 flex items-center"><Separator /></div>
+                <div className="relative flex justify-center text-xs uppercase"><span className="bg-background px-2 text-muted-foreground">Or continue with</span></div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+                <Button variant="outline" className="h-11">
+                    <Image src="/google.svg" alt="Google" width={16} height={16} className="h-4 w-4 mr-2" /> Google
+                </Button>
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground">
+                Don&apos;t have an account? <Link href={activeTab === 'merchant' ? "/auth/signup?role=merchant" : "/auth/signup"} className="text-primary font-bold hover:underline">Create an account</Link>
+            </p>
+        </div>
+    );
+}
+
+export default function SignInPage() {
+    return (
         <div className="min-h-screen flex">
             {/* Left Side - Form */}
             <div className="flex-1 flex flex-col justify-center items-center p-8 bg-background">
-                <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-left-4 duration-500">
-                    <div className="text-center space-y-2">
-                        <div className="flex justify-center mb-6">
-                            <Link href="/" className="inline-flex items-center gap-2">
-                                <Image
-                                    src="/prodoximain.png"
-                                    alt="PRODOXI"
-                                    width={180}
-                                    height={50}
-                                    className="h-12 w-auto"
-                                    priority
-                                />
-                            </Link>
-                        </div>
-                        <h1 className="text-3xl font-bold">Welcome Back</h1>
-                        <p className="text-muted-foreground">Sign in to access your digital assets and account</p>
-                    </div>
-
-                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                        <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="customer">Customer</TabsTrigger>
-                            <TabsTrigger value="merchant">Merchant</TabsTrigger>
-                        </TabsList>
-                    </Tabs>
-
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email Address</Label>
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="name@example.com"
-                                    className={cn("pl-10 h-12", errors.email && "border-red-500")}
-                                    {...register('email')}
-                                />
-                            </div>
-                            {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
-                        </div>
-
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <Label htmlFor="password">Password</Label>
-                                <Link href="/auth/forgot-password" className="text-xs text-primary font-medium hover:underline">Forgot password?</Link>
-                            </div>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    id="password"
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="••••••••"
-                                    className={cn("pl-10 h-12", errors.password && "border-red-500")}
-                                    {...register('password')}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                                >
-                                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
-                            </div>
-                            {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
-                        </div>
-
-                        <Button type="submit" className="w-full h-12 bg-gradient-primary font-bold text-lg" disabled={isLoading}>
-                            {isLoading ? (
-                                <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            ) : (
-                                <>
-                                    Sign In
-                                    <ArrowRight className="ml-2 h-5 w-5" />
-                                </>
-                            )}
-                        </Button>
-                    </form>
-
-                    <div className="relative">
-                        <div className="absolute inset-0 flex items-center"><Separator /></div>
-                        <div className="relative flex justify-center text-xs uppercase"><span className="bg-background px-2 text-muted-foreground">Or continue with</span></div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                        <Button variant="outline" className="h-11">
-                            <img src="/google.svg" alt="" className="h-4 w-4 mr-2" /> Google
-                        </Button>
-                    </div>
-
-                    <p className="text-center text-sm text-muted-foreground">
-                        Don't have an account? <Link href={activeTab === 'merchant' ? "/auth/signup?role=merchant" : "/auth/signup"} className="text-primary font-bold hover:underline">Create an account</Link>
-                    </p>
-                </div>
+                <React.Suspense fallback={<div className="h-5 w-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />}>
+                    <SignInForm />
+                </React.Suspense>
             </div>
 
             {/* Right Side - Visual/Hero */}

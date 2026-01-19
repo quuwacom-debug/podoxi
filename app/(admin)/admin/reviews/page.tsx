@@ -3,13 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import {
-    MoreHorizontal,
     Search,
     Filter,
-    Star,
-    CheckCircle,
-    XCircle,
-    AlertCircle
+    Star
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -31,15 +27,17 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { ReviewModerationDialog } from "@/components/admin/reviews/ReviewModerationDialog"
+
+interface Review {
+    id: string
+    product: string
+    customer: string
+    rating: number
+    date: string
+    status: string
+    content: string
+}
 
 // Mock Data
 const reviews = [
@@ -51,7 +49,7 @@ const reviews = [
 ]
 
 export default function ReviewsPage() {
-    const [selectedReview, setSelectedReview] = useState<any>(null)
+    const [selectedReview, setSelectedReview] = useState<Review | null>(null)
     const [filterStatus, setFilterStatus] = useState("all")
 
     const filteredReviews = reviews.filter(review =>
@@ -148,7 +146,7 @@ export default function ReviewsPage() {
             </Card>
 
             <ReviewModerationDialog
-                review={selectedReview}
+                review={selectedReview as unknown as Parameters<typeof ReviewModerationDialog>[0]['review']}
                 open={!!selectedReview}
                 onOpenChange={(open) => !open && setSelectedReview(null)}
             />
