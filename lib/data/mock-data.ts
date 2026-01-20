@@ -12,6 +12,7 @@ export const mockProducts: Product[] = [
         seller: 'ThemeForge BD',
         type: 'one-time',
         category: 'Themes & Templates',
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     },
     {
         id: '2',

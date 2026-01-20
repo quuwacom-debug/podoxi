@@ -201,6 +201,22 @@ export default function ProductDetailPage() {
                                         Whether you are starting a new project or scaling an existing one, the features included in this package will streamline your workflow and help you achieve results faster.
                                     </p>
                                 </div>
+                                {product.videoUrl && (
+                                    <div className="mt-8">
+                                        <h3 className="text-xl font-bold mb-4">Video Tutorial</h3>
+                                        <div className="aspect-video rounded-xl overflow-hidden border bg-muted">
+                                            <iframe
+                                                width="100%"
+                                                height="100%"
+                                                src={product.videoUrl}
+                                                title="Product Video"
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div>

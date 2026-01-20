@@ -20,6 +20,7 @@ export interface Product {
     seller: string;
     type: 'one-time' | 'subscription';
     category: string;
+    videoUrl?: string;
 }
 
 interface ProductCardProps {
@@ -45,7 +46,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Card className="group overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <Link href={`/product/${product.id}`}>
                 <CardHeader className="p-0">
-                    <div className="relative aspect-video overflow-hidden bg-muted">
+                    <div className="relative w-full aspect-video overflow-hidden bg-muted">
                         <Image
                             src={product.thumbnail}
                             alt={product.name}
@@ -53,7 +54,7 @@ export function ProductCard({ product }: ProductCardProps) {
                             className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         {product.type === 'subscription' && (
-                            <Badge className="absolute top-2 right-2 bg-accent">
+                            <Badge className="absolute top-2 right-2 bg-accent/90 backdrop-blur-sm">
                                 Subscription
                             </Badge>
                         )}
@@ -75,8 +76,8 @@ export function ProductCard({ product }: ProductCardProps) {
                             <Star
                                 key={i}
                                 className={`h-4 w-4 ${i < Math.floor(product.rating)
-                                        ? 'fill-yellow-400 text-yellow-400'
-                                        : 'text-gray-300'
+                                    ? 'fill-yellow-400 text-yellow-400'
+                                    : 'text-gray-300'
                                     }`}
                             />
                         ))}

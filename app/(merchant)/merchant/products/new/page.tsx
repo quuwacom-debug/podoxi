@@ -9,7 +9,8 @@ import {
     Info,
     DollarSign,
     Tag,
-    FileText
+    FileText,
+    Video
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -101,12 +102,12 @@ export default function NewProductPage() {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="aspect-video rounded-xl border-2 border-dashed border-muted-foreground/20 flex flex-col items-center justify-center space-y-2 hover:border-primary/50 transition-colors cursor-pointer group bg-muted/30">
+                                <div className="h-[180px] w-[180px] rounded-xl border-2 border-dashed border-muted-foreground/20 flex flex-col items-center justify-center space-y-2 hover:border-primary/50 transition-colors cursor-pointer group bg-muted/30">
                                     <div className="p-3 rounded-full bg-background shadow-sm group-hover:scale-110 transition-transform">
                                         <Plus className="h-6 w-6 text-primary" />
                                     </div>
-                                    <p className="text-xs font-medium">Upload Thumbnail</p>
-                                    <p className="text-[10px] text-muted-foreground">Standard 16:9 recommended</p>
+                                    <p className="text-xs font-medium">Product Photo</p>
+                                    <p className="text-[10px] text-muted-foreground text-center px-2">1:1 ratio, Max 5 photos</p>
                                 </div>
                                 <div className="aspect-video rounded-xl border-2 border-dashed border-muted-foreground/20 flex flex-col items-center justify-center space-y-2 hover:border-primary/50 transition-colors cursor-pointer group bg-muted/30">
                                     <div className="p-3 rounded-full bg-background shadow-sm group-hover:scale-110 transition-transform">
@@ -115,6 +116,22 @@ export default function NewProductPage() {
                                     <p className="text-xs font-medium">Add Preview Screenshots</p>
                                     <p className="text-[10px] text-muted-foreground">JPG, PNG up to 10MB</p>
                                 </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border-muted-foreground/10">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Video className="h-5 w-5 text-primary" />
+                                Video Preview
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="videoUrl">YouTube Video Link (Optional)</Label>
+                                <Input id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." className="h-12" />
+                                <p className="text-[10px] text-muted-foreground">Add a YouTube video link to showcase your product.</p>
                             </div>
                         </CardContent>
                     </Card>
